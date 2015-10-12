@@ -3,6 +3,7 @@ package java8.lambda;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Sample for Lambda
@@ -25,9 +26,8 @@ public class LambdaSample {
 				"nagasaki",
 				"fukuoka",
 				"chitose",
-			
 		};
-		List<String> list = Arrays.asList(elements);
+		List<String> list = new ArrayList(Arrays.asList(elements));
 		
 		LambdaSample main = new LambdaSample();
 		System.out.println("#--- Start");
@@ -37,6 +37,8 @@ public class LambdaSample {
 		main.sampleUpperCase2(list);
 		main.sampleShorterThan(list);
 		main.sampleSort(list);
+		main.sampleReplaceAll(list);
+		main.sampleRemoveIf(list);
 	}
 	
 	private void printlnAll(List<String> list){
@@ -96,6 +98,23 @@ public class LambdaSample {
 		
 		System.out.println("# sampleSort Desc");
 		list.sort((o1, o2) -> o2.compareTo(o1));
+		list.forEach(System.out::println);
+	}
+	
+	public void sampleReplaceAll(List<String> list){
+		System.out.println("# sampleReplaceAll");
+		list.replaceAll(city -> city.startsWith("k") ? city + "+" : city);
+		list.forEach(System.out::println);
+	}
+	
+	// use Predicate. 'And' 'Or'
+	public void sampleRemoveIf(List<String> list){
+		System.out.println("# sampleRemoveIf");
+		Predicate<String> predicate1 = city->{ return city.startsWith("n");};
+		Predicate<String> predicate2 = city->{ return city.endsWith("a");};
+		
+		//list.removeIf(predicate1.and(predicate2)); 	// AND
+		list.removeIf(predicate1.or(predicate2));		// OR
 		list.forEach(System.out::println);
 	}
 }
