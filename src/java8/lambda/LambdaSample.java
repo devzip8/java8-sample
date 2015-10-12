@@ -36,6 +36,7 @@ public class LambdaSample {
 		main.sampleUpperCase(list);
 		main.sampleUpperCase2(list);
 		main.sampleShorterThan(list);
+		main.sampleSort(list);
 	}
 	
 	private void printlnAll(List<String> list){
@@ -86,5 +87,15 @@ public class LambdaSample {
 	// Try to use 'anyMatch'
 	private boolean isAnyShorterThan(List<String> list, int length){
 		return list.stream().anyMatch(e -> e.length() < length);
+	}
+	
+	public void sampleSort(List<String> list){
+		System.out.println("# sampleSort Asc");
+		list.sort((o1, o2) -> o1.compareTo(o2));
+		list.forEach(System.out::println);
+		
+		System.out.println("# sampleSort Desc");
+		list.sort((o1, o2) -> o2.compareTo(o1));
+		list.forEach(System.out::println);
 	}
 }
