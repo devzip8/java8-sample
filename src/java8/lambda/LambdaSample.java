@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Sample for Lambda
@@ -33,12 +35,14 @@ public class LambdaSample {
 		System.out.println("#--- Start");
 		main.printlnAll(list);
 		
-		main.sampleUpperCase(list);
-		main.sampleUpperCase2(list);
-		main.sampleShorterThan(list);
-		main.sampleSort(list);
-		main.sampleReplaceAll(list);
-		main.sampleRemoveIf(list);
+		main.sampleUpperCase(	new ArrayList<String>(list));
+		main.sampleUpperCase2(	new ArrayList<String>(list));
+		main.sampleShorterThan(	new ArrayList<String>(list));
+		main.sampleSort(		new ArrayList<String>(list));
+		main.sampleReplaceAll(	new ArrayList<String>(list));
+		main.sampleRemoveIf(	new ArrayList<String>(list));
+		main.sampleGroupingBy(	new ArrayList<String>(list));
+		main.sampleInfiniteStream();
 	}
 	
 	private void printlnAll(List<String> list){
@@ -116,5 +120,25 @@ public class LambdaSample {
 		//list.removeIf(predicate1.and(predicate2)); 	// AND
 		list.removeIf(predicate1.or(predicate2));		// OR
 		list.forEach(System.out::println);
+	}
+	
+	// use Infineite stream
+	public void sampleInfiniteStream(){
+		System.out.println("# sampleInfiniteStream");
+		Stream.iterate(10, i -> i + 10).limit(5).forEach(System.out::println);
+		
+		// easy to get power numbers!!
+		final int num = 3;
+		List<Integer> intList = Stream.iterate(num, n -> n*num).limit(10).collect(Collectors.toList());
+		intList.forEach(System.out::println);
+	}
+	
+	// use Collectors.groupingBy
+	public void sampleGroupingBy(List<String> list){
+		System.out.println("# sampleGroupingBy");
+		list.stream()
+			//.collect(Collectors.groupingBy(s -> s.length()))
+			.collect(Collectors.groupingBy(s -> s.charAt(0)))
+			.forEach((k, v) -> System.out.println(k + ":" + v));
 	}
 }
