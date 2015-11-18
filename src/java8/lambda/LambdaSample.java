@@ -2,9 +2,11 @@ package java8.lambda;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -43,6 +45,7 @@ public class LambdaSample {
 		main.sampleRemoveIf(	new ArrayList<String>(list));
 		main.sampleGroupingBy(	new ArrayList<String>(list));
 		main.sampleInfiniteStream();
+		main.sampleSummaryStatistics();
 	}
 	
 	private void printlnAll(List<String> list){
@@ -140,5 +143,21 @@ public class LambdaSample {
 			//.collect(Collectors.groupingBy(s -> s.length()))
 			.collect(Collectors.groupingBy(s -> s.charAt(0)))
 			.forEach((k, v) -> System.out.println(k + ":" + v));
+	}
+	
+	public void sampleSummaryStatistics(){
+		System.out.println("# sampleSammaryStatistics");
+		
+		IntSummaryStatistics stats = IntStream.generate(() -> (int)(Math.random() * 100))
+                .filter(n -> n >= 80)
+                .distinct()
+                .limit(5)
+                .summaryStatistics();
+		System.out.println(stats);
+		
+		// listからもOK。便利
+		List<Integer> list = Arrays.asList(34, 38, 29, 42 ,50);
+		stats = list.stream().filter(n -> n >= 30).mapToInt(n -> n.intValue()).summaryStatistics();
+		System.out.println(stats);
 	}
 }
