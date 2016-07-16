@@ -49,6 +49,5 @@ public class TimeSample {
 		System.out.println("isLeapYear: " + targetDate.isLeapYear());
 		System.out.println("isAfter   : " + targetDate.isAfter(today));
 		System.out.println("isBefore  : " + targetDate.isBefore(today));
-		
 	}
 }
